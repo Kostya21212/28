@@ -1,51 +1,29 @@
 class SuperMath {
-    constructor() {}
-  
-    check(obj) {
+  check(obj) {
       const { X, Y, znak } = obj;
-      const validOperators = ['+', '-', '/', '*', '%'];
-  
-      if (!validOperators.includes(znak)) {
-        console.log('Некоректний знак операції. Введіть один з наступних: + - / * %');
-        this.input();
-        return;
+      const isValidOperation = ['+', '-', '/', '*', '%'].includes(znak);
+      if (!isValidOperation) {
+          console.log('Неправильна операція.');
+          return this.input();
       }
-  
-      const confirmation = prompt(`Ви хочете зробити операцію ${znak} з числами ${X} і ${Y}? (Так/Ні)`);
-  
+      
+      const confirmation = prompt(`Бажаєте виконати операцію ${znak} над ${X} та ${Y}? (так/ні): `);
       if (confirmation.toLowerCase() === 'так') {
-        const result = this.calculate(X, Y, znak);
-        console.log(`Результат операції ${X} ${znak} ${Y} = ${result}`);
+          return eval(`${X} ${znak} ${Y}`);
       } else {
-        this.input();
+          return this.input();
       }
-    }
-  
-    input() {
-      const X = parseFloat(prompt('Введіть число X:'));
-      const Y = parseFloat(prompt('Введіть число Y:'));
-      const znak = prompt('Введіть операцію (+ - / * %):');
-  
-      this.check({ X, Y, znak });
-    }
-  
-    calculate(X, Y, znak) {
-      const operations = {
-        '+': (a, b) => a + b,
-        '-': (a, b) => a - b,
-        '/': (a, b) => a / b,
-        '*': (a, b) => a * b,
-        '%': (a, b) => a % b
-      };
-  
-      if (operations.hasOwnProperty(znak)) {
-        return operations[znak](X, Y);
-      } else {
-        return NaN;
-      }
-    }
   }
-  
-  const superMath = new SuperMath();
-  superMath.check({ X: 12, Y: 3, znak: '/' });
-  
+
+  input() {
+      const X = parseFloat(prompt("Введіть X:"));
+      const Y = parseFloat(prompt("Введіть Y:"));
+      const znak = prompt("Введіть знак (+ - / * %):");
+      return this.check({ X, Y, znak });
+  }
+}
+
+// Приклад використання
+const superMath = new SuperMath();
+const result = superMath.check({ X: 12, Y: 3, znak: "/" });
+console.log("Результат:", result);
